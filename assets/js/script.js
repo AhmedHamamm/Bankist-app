@@ -34,7 +34,9 @@ const accounts = [account1, account2, account3, account4];
 // Elements
 const containerMovements = document.querySelector(".movements");
 const labebBalance = document.querySelector(".balance-value");
-
+const labelSumIn = document.querySelector(".summary-value_in");
+const labelSumOut = document.querySelector(".summary-value_out");
+const labelSumInterest = document.querySelector(".summary-value_interest");
 /////////////////////////////////////////////////
 // Functions
 
@@ -83,3 +85,34 @@ const calcPrintBalanc = () => {
   labebBalance.textContent = `${balance} EUR`;
 };
 calcPrintBalanc(account1.movements);
+
+const calcDisplaySum = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  // Math.abs() to remove - sign
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySum(account1.movements);
+
+const eurToUsd = 1.1;
+const totalDepositsUSD = account1.movements
+  .filter((mov) => mov > 0)
+  .map((mov) => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
