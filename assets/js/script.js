@@ -41,10 +41,15 @@ const labelSumIn = document.querySelector(".summary-value_in");
 const labelSumOut = document.querySelector(".summary-value_out");
 const labelSumInterest = document.querySelector(".summary-value_interest");
 
+// Buttons
 const btnLogin = document.querySelector(".login-btn");
+const btnTransfer = document.querySelector(".form-btn_transfer");
 
+// Inputs
 const inputLoginUname = document.querySelector(".login-input_user");
 const inputLoginPin = document.querySelector(".login-input_pin");
+const inputTransferTo = document.querySelector(".form-input_to");
+const inputTransferAmount = document.querySelector(".form-input_amount");
 
 /////////////////////////////////////////////////
 // Functions
@@ -70,7 +75,7 @@ const displayMovements = function (movs) {
   });
 };
 
-// creat usernames, form 'Ahmed Hamam' to "ah"
+// creat usernames, from 'Ahmed Hamam' to "ah"
 const creatUsernames = function (accs) {
   accs.forEach((acc) => {
     acc.username = acc.owner
@@ -87,9 +92,9 @@ const deposits = account1.movements.filter((mov) => mov > 0);
 const withdrawal = account1.movements.filter((mov) => mov < 0);
 
 // accumulator => SNOWBALL
-const calcPrintBalanc = (movements) => {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labebBalance.textContent = `${balance}€`;
+const calcPrintBalanc = (acc) => {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labebBalance.textContent = `${acc.balance}€`;
 };
 
 const calcDisplaySum = function (acc) {
@@ -122,6 +127,16 @@ const totalDepositsUSD = account1.movements
   .reduce((acc, mov) => acc + mov, 0);
 // console.log(totalDepositsUSD);
 
+const updateUI = function (acc) {
+  // Display movemments
+  displayMovements(acc.movements);
+
+  // Display balance
+  calcPrintBalanc(acc);
+
+  // Display summary
+  calcDisplaySum(acc);
+};
 // Event handler
 let currentAccount;
 
@@ -146,13 +161,31 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUname.value = inputLoginPin.value = "";
     inputLoginPin.blur();
 
-    // Display movemments
-    displayMovements(currentAccount.movements);
+    // Update UI
+    updateUI(currentAccount);
+  }
+});
 
-    // Display balance
-    calcPrintBalanc(currentAccount.movements);
+btnTransfer.addEventListener("click", function (e) {
+  // prevent form tag from submitting
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    (acc) => acc.username === inputTransferTo.value
+  );
+  inputTransferAmount.value = inputTransferTo.value = "";
 
-    // Display summary
-    calcDisplaySum(currentAccount);
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // The transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
   }
 });
