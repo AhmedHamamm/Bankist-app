@@ -46,6 +46,7 @@ const btnLogin = document.querySelector(".login-btn");
 const btnTransfer = document.querySelector(".form-btn_transfer");
 const btnLoan = document.querySelector(".form-btn_loan");
 const btnClose = document.querySelector(".form-btn_close");
+const btnSort = document.querySelector(".btn-sort");
 
 // Inputs
 const inputLoginUname = document.querySelector(".login-input_user");
@@ -59,10 +60,10 @@ const inputClosePin = document.querySelector(".form-input_pin");
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movs) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
 
-  // const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
@@ -238,4 +239,11 @@ btnClose.addEventListener("click", function (e) {
     labelWelcome.textContent = `Log in to get started`;
   }
   inputCloseUsername.value = inputClosePin.value = "";
+});
+
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
