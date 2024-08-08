@@ -1,7 +1,6 @@
 # Bankist App
 
-Welcome to the **Bankist App**! This is a sleek, modern banking application built with HTML, CSS, and JavaScript. 
-It’s designed to help you manage your finances effortlessly—whether you’re checking your balance, transferring money, or requesting a loan, Bankist has you covered.
+Welcome to the **Bankist App**! This is a sleek, modern banking application built with HTML, CSS, and JavaScript. It’s designed to help you manage your finances effortlessly whether you’re checking your balance, transferring money, or requesting a loan, Bankist has you covered.
 
 ## Features
 
@@ -22,62 +21,56 @@ Use the following test data to explore the app's features:
 
 **User Accounts**
 
-User 1:
-Username: ah
-Pin: 1111
-Movements: [200, -300, 5000, -850, -1100, 700, -50, 1300]
+` User 1:`
 
-User 2:
-Username: fw
-Pin: 2222
-Movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30]
+- Username: ah
 
-User 3:
-Username: sa
-Pin: 3333
-Movements: [200, -200, 340, -300, -20, 50, 400, -460]
+- Pin: 1111
 
-User 4:
-Username: aa
-Pin: 4444
-Movements: [430, 1000, 700, 50, 90]
+- Movements: [200, -300, 5000, -850, -1100, 700, -50, 1300]
+
+` User 2:`
+
+- Username: fw
+
+- Pin: 2222
+
+- Movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30]
+
+`User 3:`
+- Username: sa
+
+- Pin: 3333
+
+- Movements: [200, -200, 340, -300, -20, 50, 400, -460]
+
+` User 4:`
+- Username: aa
+
+- Pin: 4444
+
+- Movements: [430, 1000, 700, 50, 90]
 
 
 **Testing Scenarios**
+
 Transfer Money:
 
-Transfer a small amount from User 1 to User 2 to see how the balance updates in real-time.
+- Transfer a small amount from User 1 to User 2 to see how the balance updates in real-time.
+
 Request Loan:
 
-Request a loan as User 1, and check how the balance and movements are updated.
+- Request a loan as User 1, and check how the balance and movements are updated.
+
 Close Account:
 
-Close User 2's account by entering the correct username and pin.
-
-## Project Structure
-
-Here's how the project is organized:
-Bankist-app/
-│
-├── index.html # The main structure of the app
-│
-├── assets/
-│ ├── css/
-│ │ └── styles.css # Styling for a clean and responsive(in future) UI
-│ │
-│ ├── img/
-│ │ ├── icon.png # Light logo
-│ │ └── logo.png # Dark logo
-│ │
-│ └── js/
-│  └── script.js # Where the magic happens (app logic)
-│
-└── README.md # You’re reading it!
+- Close User 2's account by entering the correct username and pin.
 
 ## Contributing
 
 Feel free to fork this repository and contribute! Your improvements are always welcome. Just make sure to create a pull request with a detailed explanation of what you've done.
 
-## Thanks for checking out the Bankist App! If you have any questions or feedback, feel free to reach out.
+##
+Thanks for checking out the Bankist App! If you have any questions or feedback, feel free to reach out.
 
 Visit the [Repository](https://github.com/AhmedHamamm/Bankist-app) | Email: [Ahmed Hamam](ahamam2000@yahoo.com)
