@@ -1,6 +1,7 @@
 # Bankist App
 
-Welcome to the **Bankist App**! This is a sleek, modern banking application built with HTML, CSS, and JavaScript. It’s designed to help you manage your finances effortlessly—whether you’re checking your balance, transferring money, or requesting a loan, Bankist has you covered.
+Welcome to the **Bankist App**! This is a sleek, modern banking application built with HTML, CSS, and JavaScript. 
+It’s designed to help you manage your finances effortlessly—whether you’re checking your balance, transferring money, or requesting a loan, Bankist has you covered.
 
 ## Features
 
