@@ -17,6 +17,43 @@ It’s designed to help you manage your finances effortlessly—whether you’re
 
 Check out the live version of the Bankist App here: [Bankist App Live Preview](https://ahmedhamamm.github.io/Bankist-app/)
 
+## Test Data
+Use the following test data to explore the app's features:
+
+**User Accounts**
+
+User 1:
+Username: ah
+Pin: 1111
+Movements: [200, -300, 5000, -850, -1100, 700, -50, 1300]
+
+User 2:
+Username: fw
+Pin: 2222
+Movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30]
+
+User 3:
+Username: sa
+Pin: 3333
+Movements: [200, -200, 340, -300, -20, 50, 400, -460]
+
+User 4:
+Username: aa
+Pin: 4444
+Movements: [430, 1000, 700, 50, 90]
+
+
+**Testing Scenarios**
+Transfer Money:
+
+Transfer a small amount from User 1 to User 2 to see how the balance updates in real-time.
+Request Loan:
+
+Request a loan as User 1, and check how the balance and movements are updated.
+Close Account:
+
+Close User 2's account by entering the correct username and pin.
+
 ## Project Structure
 
 Here's how the project is organized:
