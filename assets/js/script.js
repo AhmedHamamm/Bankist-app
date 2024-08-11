@@ -82,15 +82,17 @@ const account4 = {
 const accounts = [account1, account2, account3, account4];
 
 // Elements
-const labelWelcome = document.querySelector(".welcome");
-const labelDate = document.querySelector(".date");
-
 const containerApp = document.querySelector(".app");
 const containerMovements = document.querySelector(".movements");
-const labebBalance = document.querySelector(".balance-value");
+
+// Labels
+const labelWelcome = document.querySelector(".welcome");
+const labelDate = document.querySelector(".date");
+const labelBalance = document.querySelector(".balance-value");
 const labelSumIn = document.querySelector(".summary-value_in");
 const labelSumOut = document.querySelector(".summary-value_out");
 const labelSumInterest = document.querySelector(".summary-value_interest");
+const labelTimer = document.querySelector(".timer");
 
 // Buttons
 const btnLogin = document.querySelector(".login-btn");
@@ -187,7 +189,7 @@ const withdrawal = account1.movements.filter((mov) => mov < 0);
 const calcPrintBalanc = (acc) => {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
 
-  labebBalance.textContent = formatCur(acc.balance, acc.locale, acc.currency);
+  labelBalance.textContent = formatCur(acc.balance, acc.locale, acc.currency);
 };
 
 const calcDisplaySum = function (acc) {
@@ -232,13 +234,41 @@ const updateUI = function (acc) {
   calcDisplaySum(acc);
 };
 
+const startLogoutTimer = function () {
+  const tick = () => {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(Math.trunc(time % 60)).padStart(2, 0);
+
+    // In each call, print the remaining
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When 0 seconds, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = "Log in to get started";
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrese 1s
+    time--;
+  };
+
+  // Set time to 5 minutes
+  let time = 120;
+
+  // Call the timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 // Event handler
-let currentAccount;
+let currentAccount, timer;
 
 // Fake logged IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 // Experimenting API
 // const now = new Date();
@@ -299,6 +329,11 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUname.value = inputLoginPin.value = "";
     inputLoginPin.blur();
 
+    // When user1 logged in it started a timer, and then user2 did it again so we need to check if the timer is still working and clear it using clearInterval
+    // Logout timer
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -330,6 +365,10 @@ btnTransfer.addEventListener("click", function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Reset timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -343,16 +382,22 @@ btnLoan.addEventListener("click", function (e) {
     amount > 0 &&
     currentAccount.movements.some((mov) => mov >= amount * 0.1)
   ) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = "";
+
+  // Reset timer
+  clearInterval(timer);
+  timer = startLogoutTimer();
 });
 
 // Close accouunt button
