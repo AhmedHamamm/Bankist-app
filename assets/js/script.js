@@ -36,7 +36,7 @@ const account2 = {
     "2024-06-25T18:49:59.371Z",
     "2024-07-26T12:01:20.894Z",
   ],
-  currency: "USD",
+  currency: "EGP",
   locale: "ar-AE",
 };
 
@@ -128,6 +128,14 @@ const formatMovementDate = function (date, locale) {
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
+// Format currency f(X)
+const formatCur = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(value);
+};
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = "";
 
@@ -141,13 +149,15 @@ const displayMovements = function (acc, sort = false) {
     const date = new Date(acc.movementsDates[i]);
     const displayDate = formatMovementDate(date, acc.locale);
 
+    const formatedMov = formatCur(mov, acc.locale, acc.currency);
+
     const html = `
       <div class="movements-row">
         <div class="movements-type movements-type_${type}">${
       i + 1
     } ${type}</div>
         <div class="movements-date">${displayDate}</div>
-        <div class="movements-value">${mov.toFixed(2)}€</div>
+        <div class="movements-value">${formatedMov}</div>
       </div>
     `;
 
@@ -176,20 +186,21 @@ const withdrawal = account1.movements.filter((mov) => mov < 0);
 // accumulator => SNOWBALL
 const calcPrintBalanc = (acc) => {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labebBalance.textContent = `${acc.balance.toFixed(2)}€`;
+
+  labebBalance.textContent = formatCur(acc.balance, acc.locale, acc.currency);
 };
 
 const calcDisplaySum = function (acc) {
   const incomes = acc.movements
     .filter(deposit)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = formatCur(incomes, acc.locale, acc.currency);
 
   const out = acc.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   // Math.abs() to remove - sign
-  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+  labelSumOut.textContent = formatCur(Math.abs(out), acc.locale, acc.currency);
 
   const interest = acc.movements
     .filter(deposit)
@@ -199,7 +210,8 @@ const calcDisplaySum = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+
+  labelSumInterest.textContent = formatCur(interest, acc.locale, acc.currency);
 };
 
 const eurToUsd = 1.1;
